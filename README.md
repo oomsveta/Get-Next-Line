@@ -58,9 +58,9 @@ The idea is simple: I want a buffer that is big enough to hold a line, but not s
 Key benefits of this approach:
 - `get_next_line` never reallocates memory if the current buffer size is big enough.
 - If it isn't big enough, the optimal size is reached in logarithmic time.
-- Memory fragmentation is kept to a minimum. The growth factor of 1.5 (instead of 2) allows the allocator to reuse previously freed memory, which improves cache locality.
+- Memory fragmentation is kept to a minimum. The growth factor of 1.5 (instead of 2) allows the allocator to reuse previously freed memory<sup>1</sup>, which improves cache locality.
 - I know the exact size of the buffer at any moment, allowing me to use highly optimized memory functions instead of slower string functions. This also permits reading binary files without making any changes to the logic.
 
 ## 📚 References & Acknowledgments
 
-- [Dynamic array](https://en.wikipedia.org/wiki/Dynamic_array) on Wikipedia
+1. [Facebook's vector implementation](https://github.com/facebook/folly/blob/main/folly/docs/FBVector.md#memory-handling): on growth factors smaller than 2 allowing for memory reuse
