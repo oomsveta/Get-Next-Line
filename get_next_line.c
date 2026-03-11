@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:33:29 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/10 21:05:31 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/11 21:57:43 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,13 @@
 # error "Invalid buffer size"
 #endif
 
-static	char	*resize_buffer(t_buffer *buffer)
+static char	*resize_buffer(t_buffer *buffer)
 {
-	char	*new_buffer;
-	size_t	new_capacity;
-
-	new_capacity = ft_zmax(
+	char			*new_buffer;
+	const size_t	new_capacity = ft_zmax(
 			buffer->capacity + buffer->capacity / 2,
 			buffer->length + BUFFER_SIZE);
+
 	if (buffer->capacity >= new_capacity)
 	{
 		return (NULL);
@@ -93,10 +92,9 @@ static char	*fetch_eol(int fd, t_buffer *buffer)
 
 static char	*extract_line(t_buffer *buffer, char *eol_ptr)
 {
-	char	*line;
-	size_t	line_length;
+	const size_t	line_length = eol_ptr - buffer->content + 1;
+	char			*line;
 
-	line_length = eol_ptr - buffer->content + 1;
 	line = malloc(line_length + 1);
 	if (!line)
 	{

@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:37:07 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 21:43:42 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/11 21:59:14 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@
 
 static	char	*resize_buffer(t_buffer *buffer)
 {
-	char	*new_buffer;
-	size_t	new_capacity;
-	size_t	min_required_capacity;
+	char			*new_buffer;
+	const size_t	min_required_capacity = buffer->length + BUFFER_SIZE;
+	size_t			new_capacity;
 
 	new_capacity = buffer->capacity + buffer->capacity / 2;
-	min_required_capacity = buffer->length + BUFFER_SIZE;
 	if (new_capacity < min_required_capacity)
 	{
 		new_capacity = min_required_capacity;
@@ -90,10 +89,9 @@ static char	*fetch_eol(int fd, t_buffer *buffer)
 
 static char	*extract_line(t_buffer *buffer, char *eol_ptr)
 {
-	char	*line;
-	size_t	line_length;
+	const size_t	line_length = eol_ptr - buffer->content + 1;
+	char			*line;
 
-	line_length = eol_ptr - buffer->content + 1;
 	line = malloc(line_length + 1);
 	if (!line)
 	{
