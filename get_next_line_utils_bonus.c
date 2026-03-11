@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:38:14 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 22:38:48 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/11 23:25:14 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,14 @@ void	*ft_memcpy(void *buffer1, const void *buffer2, size_t n)
 	return (simple_copy(dest64, src64, n));
 }
 
+/**
+ * Returns the buffer associated with @p fd. If it does not exist in
+ * @p active_fds, creates a new node and prepends it to the list.
+ *
+ * Note: Prepending optimizes for temporal locality. A newly opened file
+ * descriptor is highly likely to be read from immediately and repeatedly,
+ * so placing it at the head of the list ensures O(1) access time.
+ */
 t_buffer	*find_or_create_buffer(int fd, t_fd_state **active_fds)
 {
 	t_fd_state	*current;

@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:33:29 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 22:03:18 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/11 23:24:53 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@
 # error "Invalid buffer size"
 #endif
 
+/**
+ * Reallocates the buffer, aiming for a growth factor of 1.5x.
+ * A growth factor smaller than 2 allows the memory allocator to eventually
+ * reuse previously freed chunks, limiting memory fragmentation over time.
+ *
+ * Note: The 1.5x factor is not strictly respected for small capacities.
+ * `ft_zmax` ensures the buffer always grows by at least `BUFFER_SIZE` to fit
+ * the next read. The 1.5x geometric growth takes over once the buffer is large.
+ *
+ * The `buffer->capacity >= new_capacity` check detects unsigned integer
+ * overflow, preventing allocation errors in the extreme case where capacity
+ * exceeds SIZE_MAX.
+ */
 static unsigned char	*resize_buffer(t_buffer *buffer)
 {
 	unsigned char	*new_buffer;
@@ -65,6 +78,16 @@ static ssize_t	read_more(int fd, t_buffer *buffer)
 	return (bytes_read);
 }
 
+/**
+ * Returns a pointer to the end of the line.
+ *
+ * The end of the line is defined as either the first '\n' character found, or
+ * the last character currently in the buffer if the end of the file is reached
+ * or a read error occurs.
+ *
+ * If the buffer is empty and no more data can be read, the function returns
+ * NULL, signaling that we are done with this file.
+ */
 static unsigned char	*fetch_eol(int fd, t_buffer *buffer)
 {
 	unsigned char	*eol_ptr;

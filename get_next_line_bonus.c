@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:37:07 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 22:12:05 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/11 23:22:27 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,16 @@ static ssize_t	read_more(int fd, t_buffer *buffer)
 	return (bytes_read);
 }
 
+/**
+ * Returns a pointer to the end of the line.
+ *
+ * The end of the line is defined as either the first '\n' character found, or
+ * the last character currently in the buffer if the end of the file is reached
+ * or a read error occurs.
+ *
+ * If the buffer is empty and no more data can be read, the function returns
+ * NULL, signaling that we are done with this file.
+ */
 static unsigned char	*fetch_eol(int fd, t_buffer *buffer)
 {
 	unsigned char	*eol_ptr;
