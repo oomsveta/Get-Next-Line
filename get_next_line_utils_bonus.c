@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:38:14 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 22:28:04 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:38:48 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,24 +107,18 @@ t_buffer	*find_or_create_buffer(int fd, t_fd_state **active_fds)
 
 void	dispose_buffer(int fd, t_fd_state **active_fds)
 {
-	t_fd_state	*current;
-	t_fd_state	*prev;
+	t_fd_state	*to_delete;
 
-	current = *active_fds;
-	prev = NULL;
-	while (current && current->fd != fd)
+	while (*active_fds)
 	{
-		prev = current;
-		current = current->next;
+		if ((*active_fds)->fd == fd)
+		{
+			to_delete = *active_fds;
+			*active_fds = to_delete->next;
+			free(to_delete->buffer.content);
+			free(to_delete);
+			return ;
+		}
+		active_fds = &(*active_fds)->next;
 	}
-	if (prev)
-	{
-		prev->next = current->next;
-	}
-	else
-	{
-		*active_fds = current->next;
-	}
-	free(current->buffer.content);
-	free(current);
 }
