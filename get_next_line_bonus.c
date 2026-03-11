@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:37:07 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 22:08:52 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:12:05 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,12 @@ static char	*extract_line(t_buffer *buffer, unsigned char *eol_ptr)
 
 char	*get_next_line(int fd)
 {
-	static t_fd_state	*head = NULL;
+	static t_fd_state	*active_fds = NULL;
 	t_buffer			*buffer;
 	unsigned char		*eol_ptr;
 	char				*line;
 
-	buffer = find_or_create_buffer(fd, &head);
+	buffer = find_or_create_buffer(fd, &active_fds);
 	if (!buffer)
 	{
 		return (NULL);
@@ -119,13 +119,13 @@ char	*get_next_line(int fd)
 	eol_ptr = fetch_eol(fd, buffer);
 	if (!eol_ptr)
 	{
-		dispose_buffer(fd, &head);
+		dispose_buffer(fd, &active_fds);
 		return (NULL);
 	}
 	line = extract_line(buffer, eol_ptr);
 	if (!line)
 	{
-		dispose_buffer(fd, &head);
+		dispose_buffer(fd, &active_fds);
 		return (NULL);
 	}
 	return (line);

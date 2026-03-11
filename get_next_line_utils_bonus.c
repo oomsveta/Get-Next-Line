@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:38:14 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/10 21:05:28 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:28:04 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ void	*ft_memcpy(void *buffer1, const void *buffer2, size_t n)
 	return (simple_copy(dest64, src64, n));
 }
 
-t_buffer	*find_or_create_buffer(int fd, t_fd_state **head)
+t_buffer	*find_or_create_buffer(int fd, t_fd_state **active_fds)
 {
 	t_fd_state	*current;
 
-	current = *head;
+	current = *active_fds;
 	while (current)
 	{
 		if (current->fd == fd)
@@ -100,17 +100,17 @@ t_buffer	*find_or_create_buffer(int fd, t_fd_state **head)
 	current->fd = fd;
 	current->buffer.length = 0;
 	current->buffer.capacity = BUFFER_SIZE;
-	current->next = *head;
-	*head = current;
+	current->next = *active_fds;
+	*active_fds = current;
 	return (&current->buffer);
 }
 
-void	dispose_buffer(int fd, t_fd_state **head)
+void	dispose_buffer(int fd, t_fd_state **active_fds)
 {
 	t_fd_state	*current;
 	t_fd_state	*prev;
 
-	current = *head;
+	current = *active_fds;
 	prev = NULL;
 	while (current && current->fd != fd)
 	{
@@ -123,7 +123,7 @@ void	dispose_buffer(int fd, t_fd_state **head)
 	}
 	else
 	{
-		*head = current->next;
+		*active_fds = current->next;
 	}
 	free(current->buffer.content);
 	free(current);

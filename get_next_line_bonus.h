@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:39:07 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 22:07:37 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:29:07 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ char	*get_next_line(int fd);
 // utils
 void		*ft_memcpy(void *dest, const void *src, size_t n);
 void		*ft_memchr(const void *buffer, int c, size_t n);
-void		dispose_buffer(int fd, t_fd_state **head);
-t_buffer	*find_or_create_buffer(int fd, t_fd_state **head);
+void		dispose_buffer(int fd, t_fd_state **active_fds);
+t_buffer	*find_or_create_buffer(int fd, t_fd_state **active_fds);
