@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:39:07 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/10 21:05:24 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:07:37 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 
 typedef struct s_buffer
 {
-	char	*content;
-	size_t	length;
-	size_t	capacity;
+	unsigned char	*content;
+	size_t			length;
+	size_t			capacity;
 }	t_buffer;
 
 typedef struct s_fd_state

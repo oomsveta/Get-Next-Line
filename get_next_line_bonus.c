@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:37:07 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 21:59:14 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:08:52 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <unistd.h>
 #include "get_next_line_bonus.h"
 
-static	char	*resize_buffer(t_buffer *buffer)
+static unsigned char	*resize_buffer(t_buffer *buffer)
 {
-	char			*new_buffer;
+	unsigned char	*new_buffer;
 	const size_t	min_required_capacity = buffer->length + BUFFER_SIZE;
 	size_t			new_capacity;
 
@@ -62,11 +62,11 @@ static ssize_t	read_more(int fd, t_buffer *buffer)
 	return (bytes_read);
 }
 
-static char	*fetch_eol(int fd, t_buffer *buffer)
+static unsigned char	*fetch_eol(int fd, t_buffer *buffer)
 {
-	char	*eol_ptr;
-	ssize_t	bytes_read;
-	size_t	offset;
+	unsigned char	*eol_ptr;
+	ssize_t			bytes_read;
+	size_t			offset;
 
 	eol_ptr = ft_memchr(buffer->content, '\n', buffer->length);
 	while (!eol_ptr)
@@ -87,7 +87,7 @@ static char	*fetch_eol(int fd, t_buffer *buffer)
 	return (eol_ptr);
 }
 
-static char	*extract_line(t_buffer *buffer, char *eol_ptr)
+static char	*extract_line(t_buffer *buffer, unsigned char *eol_ptr)
 {
 	const size_t	line_length = eol_ptr - buffer->content + 1;
 	char			*line;
@@ -108,7 +108,7 @@ char	*get_next_line(int fd)
 {
 	static t_fd_state	*head = NULL;
 	t_buffer			*buffer;
-	char				*eol_ptr;
+	unsigned char		*eol_ptr;
 	char				*line;
 
 	buffer = find_or_create_buffer(fd, &head);

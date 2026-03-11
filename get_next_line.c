@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:33:29 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 21:57:43 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:03:18 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 # error "Invalid buffer size"
 #endif
 
-static char	*resize_buffer(t_buffer *buffer)
+static unsigned char	*resize_buffer(t_buffer *buffer)
 {
-	char			*new_buffer;
+	unsigned char	*new_buffer;
 	const size_t	new_capacity = ft_zmax(
 			buffer->capacity + buffer->capacity / 2,
 			buffer->length + BUFFER_SIZE);
@@ -65,11 +65,11 @@ static ssize_t	read_more(int fd, t_buffer *buffer)
 	return (bytes_read);
 }
 
-static char	*fetch_eol(int fd, t_buffer *buffer)
+static unsigned char	*fetch_eol(int fd, t_buffer *buffer)
 {
-	char	*eol_ptr;
-	ssize_t	bytes_read;
-	size_t	offset;
+	unsigned char	*eol_ptr;
+	ssize_t			bytes_read;
+	size_t			offset;
 
 	eol_ptr = ft_memchr(buffer->content, '\n', buffer->length);
 	while (!eol_ptr)
@@ -90,7 +90,7 @@ static char	*fetch_eol(int fd, t_buffer *buffer)
 	return (eol_ptr);
 }
 
-static char	*extract_line(t_buffer *buffer, char *eol_ptr)
+static char	*extract_line(t_buffer *buffer, unsigned char *eol_ptr)
 {
 	const size_t	line_length = eol_ptr - buffer->content + 1;
 	char			*line;
@@ -112,7 +112,7 @@ static char	*extract_line(t_buffer *buffer, char *eol_ptr)
 char	*get_next_line(int fd)
 {
 	static t_buffer	buffer = {NULL, 0, BUFFER_SIZE};
-	char			*eol_ptr;
+	unsigned char	*eol_ptr;
 
 	if (!buffer.content)
 	{
