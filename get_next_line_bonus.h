@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:39:07 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 22:32:33 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/11 22:34:02 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ typedef struct s_fd_state
 {
 	t_buffer			buffer;
 	struct s_fd_state	*next;
-    int					fd;
+	int					fd;
 }	t_fd_state;
 
-char	*get_next_line(int fd);
+char		*get_next_line(int fd);
 
 // utils
 void		*ft_memcpy(void *dest, const void *src, size_t n);
