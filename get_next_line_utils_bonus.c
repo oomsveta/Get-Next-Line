@@ -6,14 +6,13 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:38:14 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 23:25:14 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/12 22:21:19 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <stddef.h>		// provides NULL, size_t
 #include <stdint.h>		// provides uint8_t, uint64_t, uintptr_t
-#include <stdbool.h>	// provides bool
+#include <stdlib.h>		// provides free, malloc
 #include "get_next_line_bonus.h"
 
 void	*ft_memchr(const void *buffer, int c, size_t n)
