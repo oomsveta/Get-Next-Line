@@ -6,11 +6,14 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:33:56 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 22:01:41 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/03/12 22:19:27 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>	// provides size_t
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+
+# include <stddef.h>	// provides size_t
 
 typedef struct s_buffer
 {
@@ -26,3 +29,5 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memchr(const void *buffer, int c, size_t n);
 size_t	ft_zmax(size_t a, size_t b);
+
+#endif	/* GET_NEXT_LINE_H */
