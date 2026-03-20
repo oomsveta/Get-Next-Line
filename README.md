@@ -31,7 +31,7 @@ Beyond purely cosmetic considerations, the Norm also forbids the following langu
 > [!TIP]
 > You can find the latest version of the Norm in the [Norminette repository](https://github.com/42School/norminette) – the program used to check conformity with the Norm. The version of the Norm included in this repository is the one that was in use when I completed this project.
 
-## 🧑‍🔬 Implementation Notes
+🔬 Implementation Notes
 
 My implementation differs from the approach usually taken by 42 students to solve this exercise.
 
