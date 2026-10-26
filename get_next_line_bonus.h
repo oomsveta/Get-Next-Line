@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:39:07 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 22:37:23 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/26 19:14:34 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define GET_NEXT_LINE_BONUS_H
 
 # include <stddef.h>	// provides size_t
+# include <stdint.h>	// provides uintptr_t
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 128
@@ -22,6 +23,8 @@
 # if BUFFER_SIZE <= 0 || BUFFER_SIZE > 0x7ffff000
 #  error "Invalid buffer size"
 # endif
+
+typedef uintptr_t __attribute__((__may_alias__))	t_word;
 
 typedef struct s_buffer
 {

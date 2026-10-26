@@ -6,12 +6,13 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:35:44 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/12 22:21:26 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/26 19:16:07 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>		// provides NULL, size_t
-#include <stdint.h>		// provides uint8_t, uint64_t, uintptr_t
+#include "get_next_line.h"	// provides t_word
+#include <stddef.h>			// provides NULL, size_t
+#include <stdint.h>			// provides uintptr_t
 
 void	*ft_memchr(const void *buffer, int c, size_t n)
 {
@@ -33,8 +34,8 @@ void	*ft_memchr(const void *buffer, int c, size_t n)
 
 static void	*simple_copy(void *buffer1, const void *buffer2, size_t n)
 {
-	uint8_t			*dest;
-	const uint8_t	*src;
+	unsigned char		*dest;
+	const unsigned char	*src;
 
 	dest = buffer1;
 	src = buffer2;
@@ -48,24 +49,24 @@ static void	*simple_copy(void *buffer1, const void *buffer2, size_t n)
 
 void	*ft_memcpy(void *buffer1, const void *buffer2, size_t n)
 {
-	uint8_t			*dest;
-	const uint8_t	*src;
-	uint64_t		*dest64;
-	const uint64_t	*src64;
+	unsigned char		*dest;
+	const unsigned char	*src;
+	t_word				*dest64;
+	const t_word		*src64;
 
-	if (((uintptr_t)buffer1 ^ (uintptr_t)buffer2) & 7)
+	if (((uintptr_t)buffer1 ^ (uintptr_t)buffer2) & (sizeof(t_word) - 1))
 	{
 		return (simple_copy(buffer1, buffer2, n));
 	}
 	dest = buffer1;
 	src = buffer2;
-	while (n != 0 && ((uintptr_t)dest & 7))
+	while (n != 0 && ((uintptr_t)dest & (sizeof(t_word) - 1)))
 	{
 		*dest++ = *src++;
 		n -= 1;
 	}
-	dest64 = (uint64_t *)dest;
-	src64 = (const uint64_t *)src;
+	dest64 = (t_word *)dest;
+	src64 = (const t_word *)src;
 	while (n >= 8)
 	{
 		*dest64++ = *src64++;

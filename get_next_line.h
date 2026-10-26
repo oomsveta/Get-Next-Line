@@ -6,15 +6,17 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:33:56 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/12 22:19:27 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/26 19:08:20 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
+# include <stdint.h>	// provides uintptr_t
 # include <stddef.h>	// provides size_t
 
+typedef uintptr_t __attribute__((__may_alias__))	t_word;
 typedef struct s_buffer
 {
 	unsigned char	*content;
