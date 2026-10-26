@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:33:56 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/26 19:08:20 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/26 20:12:32 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ void			*ft_memcpy(void *dest, const void *src, size_t n);
 void			free_buffer(void);
 void			*ft_memchr(const void *buffer, int c, size_t n);
 size_t			ft_zmax(size_t a, size_t b);
+unsigned char	*resize_buffer(t_buffer *buffer);
 
 #endif	/* GET_NEXT_LINE_H */
