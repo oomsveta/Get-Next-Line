@@ -16,7 +16,6 @@
 # include <stdint.h>	// provides uintptr_t
 # include <stddef.h>	// provides size_t
 
-typedef uintptr_t __attribute__((__may_alias__))	t_word;
 typedef struct s_buffer
 {
 	unsigned char	*content;

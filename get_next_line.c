@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:33:29 by lwicket           #+#    #+#             */
-/*   Updated: 2026/03/11 23:24:53 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/26 19:22:21 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ static char	*extract_line(t_buffer *buffer, unsigned char *eol_ptr)
 	line[line_length] = '\0';
 	ft_memcpy(line, buffer->content, line_length);
 	buffer->length -= line_length;
-	ft_memmove(buffer->content, buffer->content + line_length, buffer->length);
+	ft_memcpy(buffer->content, buffer->content + line_length, buffer->length);
 	return (line);
 }
 
