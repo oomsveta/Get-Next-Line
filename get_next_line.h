@@ -13,6 +13,14 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 128
+# endif
+// 0x7ffff000 is the Linux kernel limit of maximum number of bytes per read.
+# if BUFFER_SIZE <= 0 || BUFFER_SIZE > 0x7ffff000
+#  error "Invalid buffer size"
+# endif
+
 # include <stdint.h>	// provides uintptr_t
 # include <stddef.h>	// provides size_t
 

@@ -14,14 +14,6 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 128
-#endif
-// 0x7ffff000 is the Linux kernel limit of maximum number of bytes per read.
-#if BUFFER_SIZE <= 0 || BUFFER_SIZE > 0x7ffff000
-# error "Invalid buffer size"
-#endif
-
 /**
  * Reallocates the buffer, aiming for a growth factor of 1.5x.
  * A growth factor smaller than 2 allows the memory allocator to eventually
