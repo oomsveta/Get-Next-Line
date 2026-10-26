@@ -154,6 +154,20 @@ No. By using a dynamic array for the read buffer, we have eliminated one big bot
 
 If we really wanted to make `get_next_line` fast, we'd have to change its API too, to allow reusing the same buffer across calls. That's what the POSIX [`getline(3p)`](https://pubs.opengroup.org/onlinepubs/9799919799/functions/getline.html) function does: it allows you to provide a pointer to a malloced buffer for the result, which the function can reallocate as needed.
 
+### The Forbidden Destruction Magic
+
+A common source of concern for students working on `get_next_line` is how to handle memory leaks. `get_next_line` only frees the read buffer once the end of the file is reached: if there's nothing more to read, the buffer is no longer useful and can safely be freed. But what if the user calls `get_next_line` just once to retrieve the first line, then never calls it again? The memory remains allocated until the program terminates, at which point the OS kicks in and hopefully does the job for us. This is a known limitation of `get_next_line`, and students generally accept that this kind of "leak" doesn't need to be handled, since freeing this memory at exit isn't possible... or is it? *Vsauce jingle playing*.
+
+[As much as I complained about the transition from macOS to Linux suddenly turning `errno` into a forbidden function](https://github.com/oomsveta/Libft#the-case-of-errno), it also granted us a new superpower: the ability to use `atexit`, regardless of whether it's allowed within the scope of the assignment.
+
+Well, that's not exactly true. `atexit` is still banned; I've experienced that firsthand. But what's NOT banned is the [`destructor` attribute](https://clang.llvm.org/docs/AttributeReference.html#constructor-destructor), which you can use to mark a function that must be called after `main()` returns. Basically, it's kind of the same thing `atexit` does.
+
+Under macOS, you couldn't use that `destructor` attribute. That's because, under the hood, each destructor is turned into a call to `atexit` (`__cxa_atexit`)<sup>2</sup>, resulting in the forbidden function showing up in the final binary 🙀
+
+Linux uses the ELF binary format, which implements C destructors through a section called `.fini_array`. Pointers to each function marked as a destructor are stored in that array, and the runtime simply iterates through them when the program terminates, calling every function in the array. No extra function calls involved: we're just filling an array with pointers to functions we defined ourselves.
+
+That's it for the theory. Originally, this section of the README was supposed to be called "Left on the Drawing Board", or something along those lines, and contain all the ideas I couldn't implement. I'm happy to say that I finally managed to implement the destructor trick! Only for the basic version of `get_next_line`, though. I didn't adapt the bonus version, because I'd need at least two extra functions to implement it, and I couldn't think of two utils that would be okay to sacrifice.
+
 ### A picture is worth a thousand words
 
 `get_next_line` is a project that requires a certain amount of coding discipline. Its control flow can be a bit intricate, so jumping straight into the code can be challenging. Sketching out a diagram of the different execution paths beforehand helped me a lot.
@@ -194,7 +208,7 @@ flowchart TD
     class fetch_eol,read_more,scan_new,extract_line,set_eol_eof func;
 ```
 
-Many thanks to fellow student [Elyass Shinwari](https://github.com/ElyassShinwari) who shared a similar diagram on Slack, from who I shamelessly stole the idea<sup>2</sup>!
+Many thanks to fellow student [Elyass Shinwari](https://github.com/ElyassShinwari) who shared a similar diagram on Slack, from who I shamelessly stole the idea<sup>3</sup>!
 
 ### Compile-time buffer size validation
 
@@ -211,7 +225,8 @@ I'm just a bit worried that the Moulinette (42's autograder) might try to compil
 ## 📚 References & Acknowledgments
 
 1. [Facebook's vector implementation](https://github.com/facebook/folly/blob/main/folly/docs/FBVector.md#memory-handling): on growth factors smaller than the golden ratio allowing for memory reuse
-2. [eshinwar's own `get_next_line` repository](https://github.com/ElyassShinwari/Get-Next-Line): for the idea of including a flowchart
+2. [LLVM's git history](https://github.com/llvm/llvm-project/commit/9c542a5a4e1ba36c24e48185712779df52b7f7a6): on macOS implementing dtors using `__cxa_atexit` instead of the static `__mod_term_func` section
+3. [eshinwar's own `get_next_line` repository](https://github.com/ElyassShinwari/Get-Next-Line): for the idea of including a flowchart
 
 ### AI Usage
 
