@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:35:44 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/26 20:12:04 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/26 20:23:06 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ size_t	ft_zmax(size_t a, size_t b)
 }
 
 /* Reallocates the buffer, aiming for a growth factor of 1.5x.
- * A growth factor smaller than 2 allows the memory allocator to eventually
- * reuse previously freed chunks, limiting memory fragmentation over time.
+ * A growth factor smaller than the golden ratio allows the memory allocator to
+ * eventually reuse previously freed chunks, limiting memory fragmentation over
+ * time.
  *
  * Note: The 1.5x factor is not strictly respected for small capacities.
  * `ft_zmax` ensures the buffer always grows by at least `BUFFER_SIZE` to fit
