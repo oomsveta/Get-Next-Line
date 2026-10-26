@@ -124,25 +124,38 @@ static char	*extract_line(t_buffer *buffer, unsigned char *eol_ptr)
 	return (line);
 }
 
-char	*get_next_line(int fd)
+/**
+ * Getter to retrieve get_next_line's internal buffer.
+ *
+ * Useful to share it between different functions (get_next_line and
+ * free_buffer).
+ */
+t_buffer	*gnl_get_buffer(void)
 {
 	static t_buffer	buffer = {NULL, 0, BUFFER_SIZE};
+
+	return (&buffer);
+}
+
+char	*get_next_line(int fd)
+{
+	t_buffer		*buffer;
 	unsigned char	*eol_ptr;
 
-	if (!buffer.content)
+	buffer = gnl_get_buffer();
+	if (!buffer->content)
 	{
-		buffer.content = malloc(buffer.capacity);
-		if (!buffer.content)
+		buffer->content = malloc(buffer->capacity);
+		if (!buffer->content)
 		{
 			return (NULL);
 		}
 	}
-	eol_ptr = fetch_eol(fd, &buffer);
+	eol_ptr = fetch_eol(fd, buffer);
 	if (!eol_ptr)
 	{
-		free(buffer.content);
-		buffer = (t_buffer){NULL, 0, BUFFER_SIZE};
+		free_buffer();
 		return (NULL);
 	}
-	return (extract_line(&buffer, eol_ptr));
+	return (extract_line(buffer, eol_ptr));
 }

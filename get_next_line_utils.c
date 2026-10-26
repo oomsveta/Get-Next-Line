@@ -10,7 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"	// provides BUFFER_SIZE
 #include <stddef.h>			// provides NULL, size_t
+#include <stdlib.h>			// provides free
+
+#if defined(__has_attribute)
+# if __has_attribute(destructor)
+
+void	free_buffer(void) __attribute__((destructor));
+# endif
+#endif
 
 void	*ft_memchr(const void *buffer, int c, size_t n)
 {
@@ -51,4 +60,13 @@ size_t	ft_zmax(size_t a, size_t b)
 		return (a);
 	}
 	return (b);
+}
+
+void	free_buffer(void)
+{
+	t_buffer	*buffer;
+
+	buffer = gnl_get_buffer();
+	free(buffer->content);
+	*buffer = (t_buffer){NULL, 0, BUFFER_SIZE};
 }
