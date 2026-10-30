@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:38:14 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/26 19:18:03 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/30 20:24:26 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void	*ft_memcpy(void *buffer1, const void *buffer2, size_t n)
 	}
 	dest64 = (t_word *)dest;
 	src64 = (const t_word *)src;
-	while (n >= 8)
+	while (n >= sizeof(t_word))
 	{
 		*dest64++ = *src64++;
-		n -= 8;
+		n -= sizeof(t_word);
 	}
 	return (simple_copy(dest64, src64, n));
 }
