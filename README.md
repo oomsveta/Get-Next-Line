@@ -2,9 +2,6 @@
 
 ## ℹ️ Project Overview
 
-> [!WARNING]
-> This project is still a work in progress. Its contents, along with the information in this README file, are subject to change.
-
 ✨ 𝑔𝑒𝓉_𝓃𝑒𝓍𝓉_𝓁𝒾𝓃𝑒 ✨ is one of the first projects at [42 School](https://www.42network.org/). It consists of reimplementing a function similar to the POSIX [`getline(3p)`](https://pubs.opengroup.org/onlinepubs/9799919799/functions/getline.html) function, that is, a function that retrieves the next line from a given stream. It must be written in C on top of [`read(2)`](https://sites.uclouvain.be/SystInfo/manpages/man2/read.2.html) and [`malloc(3)` and `free(3)`](https://sites.uclouvain.be/SystInfo/manpages/man3/malloc.3.html). No other functions are allowed.
 
 The stated objective is to get the student to learn the concept of [static local variables](https://en.wikipedia.org/wiki/Local_variable#Static_local_variables), but it's also a great opportunity to dive into buffering and file handling in C.
