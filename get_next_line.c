@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:33:29 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/26 20:12:28 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/30 20:19:14 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,7 @@ static char	*extract_line(t_buffer *buffer, unsigned char *eol_ptr)
 	line = malloc(line_length + 1);
 	if (!line)
 	{
-		free(buffer->content);
-		*buffer = (t_buffer){NULL, 0, BUFFER_SIZE};
+		free_buffer();
 		return (NULL);
 	}
 	line[line_length] = '\0';
@@ -96,7 +95,7 @@ static char	*extract_line(t_buffer *buffer, unsigned char *eol_ptr)
  */
 t_buffer	*gnl_get_buffer(void)
 {
-	static t_buffer	buffer = {NULL, 0, BUFFER_SIZE};
+	static t_buffer	buffer = {NULL, 0U, 0U};
 
 	return (&buffer);
 }
@@ -109,11 +108,12 @@ char	*get_next_line(int fd)
 	buffer = gnl_get_buffer();
 	if (!buffer->content)
 	{
-		buffer->content = malloc(buffer->capacity);
+		buffer->content = malloc(BUFFER_SIZE);
 		if (!buffer->content)
 		{
 			return (NULL);
 		}
+		buffer->capacity = BUFFER_SIZE;
 	}
 	eol_ptr = fetch_eol(fd, buffer);
 	if (!eol_ptr)

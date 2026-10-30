@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:35:44 by lwicket           #+#    #+#             */
-/*   Updated: 2026/10/26 20:23:06 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/10/30 20:18:51 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,5 @@ void	free_buffer(void)
 
 	buffer = gnl_get_buffer();
 	free(buffer->content);
-	*buffer = (t_buffer){NULL, 0, BUFFER_SIZE};
+	*buffer = (t_buffer){NULL, 0U, 0U};
 }
