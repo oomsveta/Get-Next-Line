@@ -6,7 +6,7 @@
 /*   By: lwicket <lwicket@student.42belgium.be>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 20:38:14 by lwicket           #+#    #+#             */
-/*   Updated: 2026/11/17 18:48:58 by lwicket          ###   ########.fr       */
+/*   Updated: 2026/11/17 19:01:18 by lwicket          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ static void	*simple_copy(void *buffer1, const void *buffer2, size_t n)
 	return (buffer1);
 }
 
+/**
+ * NOTE: This memcpy is called on overlapping buffers. I know this is safe in
+ * the context of get_next_line because I control both the implementation of
+ * memcpy and its callers: it copies forward, and the destination always comes
+ * before the source. In any other context, memmove should be used instead.
+ * The only reason I didn't use it is that I ran out of functions I could
+ * define (this project allows only 10 functions in total).
+ */
 void	*ft_memcpy(void *buffer1, const void *buffer2, size_t n)
 {
 	unsigned char		*dest;
